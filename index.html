@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>My Store</title>
+    <title>Hometa</title>
 
     <!-- FONT -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
@@ -21,6 +21,11 @@
             background: #111;
             padding: 15px 20px;
             color: white;
+        }
+
+        .navbar {
+            background: #0f172a;
+            /* modern dark blue */
         }
 
         /* SEARCH */
@@ -59,6 +64,8 @@
             cursor: pointer;
         }
 
+
+
         .cart-count {
             background: red;
             border-radius: 50%;
@@ -72,14 +79,84 @@
             display: flex;
             gap: 20px;
             padding: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .card {
             border: 1px solid #ccc;
             padding: 15px;
-            width: 150px;
+            width: 200px;
             border-radius: 10px;
             text-align: center;
+        }
+
+
+
+        .card div {
+            margin-top: 8px;
+        }
+
+        .card span {
+            margin: 0 10px;
+            font-weight: bold;
+        }
+
+        .card img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .category-card {
+            display: block;
+            padding: 12px;
+            background: #f1f5f9;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            color: #111;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+
+        .category-card:hover {
+            background: #0f172a;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .card {
+            border: none;
+            padding: 15px;
+            width: 220px;
+            border-radius: 15px;
+            text-align: center;
+            background: white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        button {
+            padding: 8px 12px;
+            background: #111;
+            color: white;
+            border-radius: 6px;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #333;
         }
 
         button {
@@ -113,6 +190,28 @@
             cursor: pointer;
             margin-top: 10px;
         }
+
+        .popup {
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .popup button {
+            padding: 3px 8px;
+            margin: 2px;
+            font-size: 14px;
+        }
     </style>
 </head>
 
@@ -120,18 +219,20 @@
 
     <!-- NAVBAR -->
     <nav class="navbar">
-        <h2>My Store</h2>
+        <div class="logo">
+            <img src="images/logo.png">
+
+        </div>
 
         <div class="search-box">
-            <input type="text" placeholder="Search..." class="search">
+            <input type="text" placeholder="Search..." class="search" id="search-input">
             <button class="search-btn">🔍</button>
         </div>
 
+
         <ul class="menu">
             <li><a href="#">Home</a></li>
-
             <li><a onclick="toggleCategories()">Categories</a></li>
-
             <li>
                 <a onclick="toggleCart()">Cart 🛒</a>
                 <span id="cart-count" class="cart-count">0</span>
@@ -141,34 +242,63 @@
 
     <!-- PRODUCTS -->
     <div class="products">
+
         <div class="card">
-            <h3>Chocolate</h3>
-            <p>$5</p>
-            <button onclick="addToCart('Chocolate')">Add to Cart</button>
+            <img src="images/chocolate.jpg" alt="Chocolate">
+            <h3 class="product-name">Chocolate</h3>
+            <p>₹50</p>
+            <button onclick="addToCart('Chocolate', 50)">Add to Cart</button>
+
+
         </div>
 
         <div class="card">
-            <h3>Chips</h3>
-            <p>$3</p>
-            <button onclick="addToCart('Chips')">Add to Cart</button>
+            <img src="images/chips.jpg" alt="Chips">
+            <h3 class="product-name">Chips</h3>
+            <p>₹30</p>
+            <button onclick="addToCart('Chips', 30)">Add to Cart</button>
+
+
         </div>
+
+        <div class="card">
+            <img src="images/coke.jpg" alt="Coca Cola">
+            <h3 class="product-name">Coca Cola</h3>
+            <p>₹20</p>
+            <button onclick="addToCart('Coca Cola', 20)">Add to Cart</button>
+
+        </div>
+
+        <div class="card">
+            <img src="images/biscuit.jpg" alt="Biscuit">
+            <h3 class="product-name">Biscuit</h3>
+            <p>₹20</p>
+            <button onclick="addToCart('Biscuit', 20)">Add to Cart</button>
+
+
+        </div>
+
     </div>
 
-    <!-- 🛒 CART POPUP -->
+    <!-- CART POPUP -->
     <div id="cart-popup" class="popup">
         <h3>Your Cart</h3>
         <ul id="cart-items"></ul>
+        <p id="total-price">Total: ₹0</p>
         <button class="close-btn" onclick="toggleCart()">Close</button>
     </div>
 
-    <!-- 📂 CATEGORIES POPUP -->
+    <!-- CATEGORIES POPUP -->
     <div id="categories-popup" class="popup">
-        <h3>Categories</h3>
-        <ul>
-            <li><a href="category.html?name=Snacks">Snacks</a></li>
-            <li><a href="category.html?name=Drinks">Drinks</a></li>
-            <li><a href="category.html?name=Chocolates">Chocolates</a></li>
-        </ul>
+        <h3>Shop Categories</h3>
+
+        <div class="categories-grid">
+            <a href="category.html?name=Kitchen" class="category-card">🍳 Kitchen</a>
+            <a href="category.html?name=Bathroom" class="category-card">🚿 Bathroom</a>
+            <a href="category.html?name=Cleaning" class="category-card">🧼 Cleaning</a>
+            <a href="category.html?name=Storage" class="category-card">📦 Storage</a>
+        </div>
+
         <button class="close-btn" onclick="toggleCategories()">Close</button>
     </div>
 
@@ -176,14 +306,76 @@
     <script>
         let cart = [];
 
-        function addToCart(item) {
-            cart.push(item);
-            document.getElementById("cart-count").innerText = cart.length;
+        function addToCart(name, price) {
+            let existingItem = cart.find(item => item.name === name);
 
+            if (existingItem) {
+                existingItem.quantity += 1;
+                document.getElementById("qty-" + name).innerText = existingItem.quantity;
+            } else {
+                cart.push({ name, price, quantity: 1 });
+                document.getElementById("qty-" + name).innerText = 1;
+            }
+
+            updateCart();
+        }
+
+        function updateCart() {
             let list = document.getElementById("cart-items");
-            let li = document.createElement("li");
-            li.innerText = item;
-            list.appendChild(li);
+            list.innerHTML = "";
+
+            let total = 0;
+
+            cart.forEach(item => {
+                let li = document.createElement("li");
+
+                li.innerHTML = `
+                    ${item.name} <br>
+                    <button onclick="changeQty('${item.name}', -1)">➖</button>
+                    x${item.quantity}
+                    <button onclick="changeQty('${item.name}', 1)">➕</button>
+                    - ₹${item.price * item.quantity}
+                `;
+
+                list.appendChild(li);
+                total += item.price * item.quantity;
+            });
+
+            document.getElementById("cart-count").innerText = cart.length;
+            document.getElementById("total-price").innerText = "Total: ₹" + total;
+        }
+        function changeQtyFromCard(name, price, change) {
+            let existingItem = cart.find(item => item.name === name);
+
+            if (existingItem) {
+                existingItem.quantity += change;
+
+                if (existingItem.quantity <= 0) {
+                    cart = cart.filter(i => i.name !== name);
+                    document.getElementById("qty-" + name).innerText = 0;
+                } else {
+                    document.getElementById("qty-" + name).innerText = existingItem.quantity;
+                }
+
+            } else if (change > 0) {
+                cart.push({ name, price, quantity: 1 });
+                document.getElementById("qty-" + name).innerText = 1;
+            }
+
+            updateCart();
+        }
+        function changeQty(name, change) {
+            let item = cart.find(i => i.name === name);
+
+            if (!item) return;
+
+            item.quantity += change;
+
+            if (item.quantity <= 0) {
+                cart = cart.filter(i => i.name !== name);
+            }
+
+            updateCart();
         }
 
         function toggleCart() {
@@ -191,9 +383,7 @@
             let catPopup = document.getElementById("categories-popup");
 
             catPopup.style.display = "none";
-
-            cartPopup.style.display =
-                cartPopup.style.display === "block" ? "none" : "block";
+            cartPopup.style.display = cartPopup.style.display === "block" ? "none" : "block";
         }
 
         function toggleCategories() {
@@ -201,10 +391,19 @@
             let catPopup = document.getElementById("categories-popup");
 
             cartPopup.style.display = "none";
-
-            catPopup.style.display =
-                catPopup.style.display === "block" ? "none" : "block";
+            catPopup.style.display = catPopup.style.display === "block" ? "none" : "block";
         }
+
+        // SEARCH
+        document.getElementById("search-input").addEventListener("keyup", function () {
+            let searchValue = this.value.toLowerCase();
+            let cards = document.querySelectorAll(".card");
+
+            cards.forEach(function (card) {
+                let productName = card.querySelector(".product-name").innerText.toLowerCase();
+                card.style.display = productName.includes(searchValue) ? "block" : "none";
+            });
+        });
     </script>
 
 </body>
