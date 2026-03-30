@@ -23,9 +23,8 @@
             color: white;
         }
 
-        .navbar {
-            background: #0f172a;
-            /* modern dark blue */
+        .logo img {
+            height: 40px;
         }
 
         /* SEARCH */
@@ -64,8 +63,6 @@
             cursor: pointer;
         }
 
-
-
         .cart-count {
             background: red;
             border-radius: 50%;
@@ -91,22 +88,43 @@
             text-align: center;
         }
 
-
-
-        .card div {
-            margin-top: 8px;
-        }
-
-        .card span {
-            margin: 0 10px;
-            font-weight: bold;
-        }
-
         .card img {
             width: 100%;
             border-radius: 8px;
         }
 
+        button {
+            padding: 8px 12px;
+            background: black;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* POPUP BASE */
+        .popup {
+            position: fixed;
+            right: 20px;
+            top: 70px;
+            width: 260px;
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            display: none;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .close-btn {
+            background: red;
+            color: white;
+            padding: 6px 10px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        /* 🔥 CATEGORY GRID */
         .categories-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -115,102 +133,19 @@
         }
 
         .category-card {
-            display: block;
-            padding: 12px;
             background: #f1f5f9;
+            padding: 12px;
             border-radius: 8px;
             text-align: center;
             text-decoration: none;
-            color: #111;
+            color: black;
             font-weight: 500;
             transition: 0.2s;
         }
 
         .category-card:hover {
-            background: #0f172a;
-            color: white;
-            transform: scale(1.05);
-        }
-
-        .card {
-            border: none;
-            padding: 15px;
-            width: 220px;
-            border-radius: 15px;
-            text-align: center;
-            background: white;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            transition: 0.3s;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        button {
-            padding: 8px 12px;
             background: #111;
             color: white;
-            border-radius: 6px;
-            transition: 0.2s;
-        }
-
-        button:hover {
-            background: #333;
-        }
-
-        button {
-            padding: 6px 10px;
-            background: black;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        /* POPUPS */
-        .popup {
-            position: fixed;
-            right: 20px;
-            top: 70px;
-            width: 250px;
-            background: white;
-            border: 1px solid #ccc;
-            border-radius: 10px;
-            padding: 15px;
-            display: none;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .close-btn {
-            background: red;
-            color: white;
-            padding: 5px 10px;
-            border: none;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        .popup {
-            animation: fadeIn 0.2s ease;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .popup button {
-            padding: 3px 8px;
-            margin: 2px;
-            font-size: 14px;
         }
     </style>
 </head>
@@ -221,14 +156,12 @@
     <nav class="navbar">
         <div class="logo">
             <img src="images/logo.png">
-
         </div>
 
         <div class="search-box">
             <input type="text" placeholder="Search..." class="search" id="search-input">
             <button class="search-btn">🔍</button>
         </div>
-
 
         <ul class="menu">
             <li><a href="#">Home</a></li>
@@ -244,38 +177,17 @@
     <div class="products">
 
         <div class="card">
-            <img src="images/chocolate.jpg" alt="Chocolate">
-            <h3 class="product-name">Chocolate</h3>
-            <p>₹50</p>
-            <button onclick="addToCart('Chocolate', 50)">Add to Cart</button>
-
-
+            <img src="images/container.jpg">
+            <h3 class="product-name">Storage Container</h3>
+            <p>₹199</p>
+            <button onclick="addToCart('Storage Container', 199)">Add to Cart</button>
         </div>
 
         <div class="card">
-            <img src="images/chips.jpg" alt="Chips">
-            <h3 class="product-name">Chips</h3>
-            <p>₹30</p>
-            <button onclick="addToCart('Chips', 30)">Add to Cart</button>
-
-
-        </div>
-
-        <div class="card">
-            <img src="images/coke.jpg" alt="Coca Cola">
-            <h3 class="product-name">Coca Cola</h3>
-            <p>₹20</p>
-            <button onclick="addToCart('Coca Cola', 20)">Add to Cart</button>
-
-        </div>
-
-        <div class="card">
-            <img src="images/biscuit.jpg" alt="Biscuit">
-            <h3 class="product-name">Biscuit</h3>
-            <p>₹20</p>
-            <button onclick="addToCart('Biscuit', 20)">Add to Cart</button>
-
-
+            <img src="images/knife.jpg">
+            <h3 class="product-name">Knife Set</h3>
+            <p>₹299</p>
+            <button onclick="addToCart('Knife Set', 299)">Add to Cart</button>
         </div>
 
     </div>
@@ -288,9 +200,9 @@
         <button class="close-btn" onclick="toggleCart()">Close</button>
     </div>
 
-    <!-- CATEGORIES POPUP -->
+    <!-- 🔥 IMPROVED CATEGORY POPUP -->
     <div id="categories-popup" class="popup">
-        <h3>Shop Categories</h3>
+        <h3>Categories</h3>
 
         <div class="categories-grid">
             <a href="category.html?name=Kitchen" class="category-card">🍳 Kitchen</a>
@@ -304,19 +216,22 @@
 
     <!-- JAVASCRIPT -->
     <script>
-        let cart = [];
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        function saveCart() {
+            localStorage.setItem("cart", JSON.stringify(cart));
+        }
 
         function addToCart(name, price) {
-            let existingItem = cart.find(item => item.name === name);
+            let item = cart.find(i => i.name === name);
 
-            if (existingItem) {
-                existingItem.quantity += 1;
-                document.getElementById("qty-" + name).innerText = existingItem.quantity;
+            if (item) {
+                item.quantity++;
             } else {
                 cart.push({ name, price, quantity: 1 });
-                document.getElementById("qty-" + name).innerText = 1;
             }
 
+            saveCart();
             updateCart();
         }
 
@@ -328,54 +243,13 @@
 
             cart.forEach(item => {
                 let li = document.createElement("li");
-
-                li.innerHTML = `
-                    ${item.name} <br>
-                    <button onclick="changeQty('${item.name}', -1)">➖</button>
-                    x${item.quantity}
-                    <button onclick="changeQty('${item.name}', 1)">➕</button>
-                    - ₹${item.price * item.quantity}
-                `;
-
+                li.innerText = `${item.name} x${item.quantity}`;
                 list.appendChild(li);
                 total += item.price * item.quantity;
             });
 
             document.getElementById("cart-count").innerText = cart.length;
             document.getElementById("total-price").innerText = "Total: ₹" + total;
-        }
-        function changeQtyFromCard(name, price, change) {
-            let existingItem = cart.find(item => item.name === name);
-
-            if (existingItem) {
-                existingItem.quantity += change;
-
-                if (existingItem.quantity <= 0) {
-                    cart = cart.filter(i => i.name !== name);
-                    document.getElementById("qty-" + name).innerText = 0;
-                } else {
-                    document.getElementById("qty-" + name).innerText = existingItem.quantity;
-                }
-
-            } else if (change > 0) {
-                cart.push({ name, price, quantity: 1 });
-                document.getElementById("qty-" + name).innerText = 1;
-            }
-
-            updateCart();
-        }
-        function changeQty(name, change) {
-            let item = cart.find(i => i.name === name);
-
-            if (!item) return;
-
-            item.quantity += change;
-
-            if (item.quantity <= 0) {
-                cart = cart.filter(i => i.name !== name);
-            }
-
-            updateCart();
         }
 
         function toggleCart() {
@@ -394,7 +268,6 @@
             catPopup.style.display = catPopup.style.display === "block" ? "none" : "block";
         }
 
-        // SEARCH
         document.getElementById("search-input").addEventListener("keyup", function () {
             let searchValue = this.value.toLowerCase();
             let cards = document.querySelectorAll(".card");
@@ -404,6 +277,8 @@
                 card.style.display = productName.includes(searchValue) ? "block" : "none";
             });
         });
+
+        updateCart();
     </script>
 
 </body>
