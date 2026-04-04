@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Your Cart - Hometa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.body.classList.add("fade-in");
+    });
+    document.body.classList.add("fade-in");
+    document.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", function (e) {
+            let href = this.getAttribute("href");
+
+            if (!href || href === "#" || href.startsWith("javascript")) return;
+
+            e.preventDefault();
+
+            document.body.classList.remove("fade-in");
+            document.body.classList.add("fade-out");
+
+            setTimeout(() => {
+                window.location.href = href;
+            }, 300);
+        });
+    });
+</script>
+
+<body>
+
+    <div id="navbar"></div>
+
+    <script>
+        fetch("navbar.html")
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById("navbar").innerHTML = data;
+            });
+    </script>
+    <div class="container">
+        <div id="cart-items"></div>
+
+        <div class="total-box">
+            <h3 id="total-price">Total: ₹0</h3>
+
+            <button class="pay-btn" onclick="payWithRazorpay()">Pay Now</button>
+            <button class="gpay-btn" onclick="payWithGPay()">Pay with GPay</button>
+        </div>
+    </div>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <script>
+        let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+
+        function getTotal() {
+            let total = 0;
+            cart.forEach(item => total += item.price * item.quantity);
+            return total;
+        }
+
+        function loadCart() {
+            let container = document.getElementById("cart-items");
+            container.innerHTML = "";
+
+            cart.forEach(item => {
+                let div = document.createElement("div");
+                div.className = "cart-item";
+                div.innerHTML = `${item.name} x${item.quantity} <b>₹${item.price * item.quantity}</b>`;
+                container.appendChild(div);
+            });
+
+            document.getElementById("total-price").innerText = "Total: ₹" + getTotal();
+        }
+
+        function payWithRazorpay() {
+            let total = getTotal();
+            if (total === 0) return alert("Cart empty!");
+
+            var options = {
+                "key": "YOUR_KEY_ID",
+                "amount": total * 100,
+                "currency": "INR",
+                "name": "Hometa",
+                "method": { "upi": true },
+                "handler": function () {
+                    alert("Payment Successful!");
+                    localStorage.removeItem("cart");
+                    location.reload();
+                }
+            };
+
+            new Razorpay(options).open();
+        }
+
+        function payWithGPay() {
+            let total = getTotal();
+            if (total === 0) return alert("Cart empty!");
+
+            window.location.href = `upi://pay?pa=yourupiid@okaxis&pn=Hometa&am=${total}&cu=INR`;
+        } window.onload = function () {
+            let search = document.getElementById("search-section");
+            let categories = document.getElementById("categories-btn");
+
+            if (search) search.style.display = "none";
+            if (categories) categories.style.display = "none";
+        };
+
+        loadCart();
+    </script>
+
+</body>
+
+</html>

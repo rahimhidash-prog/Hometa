@@ -7,280 +7,386 @@
     <!-- FONT -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        /* NAVBAR */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #111;
-            padding: 15px 20px;
-            color: white;
-        }
-
-        .logo img {
-            height: 40px;
-        }
-
-        /* SEARCH */
-        .search-box {
-            display: flex;
-        }
-
-        .search {
-            width: 300px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-right: none;
-            border-radius: 5px 0 0 5px;
-            outline: none;
-        }
-
-        .search-btn {
-            padding: 10px;
-            border: 1px solid #ccc;
-            background: #febd69;
-            cursor: pointer;
-            border-radius: 0 5px 5px 0;
-        }
-
-        /* MENU */
-        .menu {
-            display: flex;
-            gap: 15px;
-            list-style: none;
-            align-items: center;
-        }
-
-        .menu a {
-            color: white;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .cart-count {
-            background: red;
-            border-radius: 50%;
-            padding: 3px 8px;
-            font-size: 12px;
-            margin-left: 5px;
-        }
-
-        /* PRODUCTS */
-        .products {
-            display: flex;
-            gap: 20px;
-            padding: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .card {
-            border: 1px solid #ccc;
-            padding: 15px;
-            width: 200px;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        .card img {
-            width: 100%;
-            border-radius: 8px;
-        }
-
-        button {
-            padding: 8px 12px;
-            background: black;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        /* POPUP BASE */
-        .popup {
-            position: fixed;
-            right: 20px;
-            top: 70px;
-            width: 260px;
-            background: white;
-            border-radius: 12px;
-            padding: 15px;
-            display: none;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        }
-
-        .close-btn {
-            background: red;
-            color: white;
-            padding: 6px 10px;
-            border: none;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        /* 🔥 CATEGORY GRID */
-        .categories-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .category-card {
-            background: #f1f5f9;
-            padding: 12px;
-            border-radius: 8px;
-            text-align: center;
-            text-decoration: none;
-            color: black;
-            font-weight: 500;
-            transition: 0.2s;
-        }
-
-        .category-card:hover {
-            background: #111;
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-
     <!-- NAVBAR -->
-    <nav class="navbar">
-        <div class="logo">
-            <img src="images/logo.png">
-        </div>
-
-        <div class="search-box">
-            <input type="text" placeholder="Search..." class="search" id="search-input">
-            <button class="search-btn">🔍</button>
-        </div>
-
-        <ul class="menu">
-            <li><a href="#">Home</a></li>
-            <li><a onclick="toggleCategories()">Categories</a></li>
-            <li>
-                <a onclick="toggleCart()">Cart 🛒</a>
-                <span id="cart-count" class="cart-count">0</span>
-            </li>
-        </ul>
-    </nav>
+    <div id="navbar"></div>
 
     <!-- PRODUCTS -->
     <div class="products">
 
-        <div class="card">
-            <img src="images/container.jpg">
-            <h3 class="product-name">Storage Container</h3>
-            <p>₹199</p>
-            <button onclick="addToCart('Storage Container', 199)">Add to Cart</button>
-        </div>
+        <a href="products/rotating-spice-rack.html" class="product-link">
+            <div class="product-card">
+                <img src="images/Rotating-spice-rack.png">
+                <h3>Rotating Spice Rack</h3>
+                <div class="rating">★★★★★</div>
+                <p class="price">₹800</p>
+                <button class="buy-btn">Add to Cart</button>
+            </div>
+        </a>
 
-        <div class="card">
-            <img src="images/knife.jpg">
-            <h3 class="product-name">Knife Set</h3>
-            <p>₹299</p>
-            <button onclick="addToCart('Knife Set', 299)">Add to Cart</button>
-        </div>
+        <a href="products/soap-holder.html" class="product-link">
+            <div class="product-card">
+                <img src="images/soap-holder.png">
+                <h3>Soap Holder</h3>
+                <div class="rating">★★★★★</div>
+                <p class="price">₹555</p>
+                <button class="buy-btn">Add to Cart</button>
+            </div>
+        </a>
 
+        <a href="products/basin-sink-organizer.html" class="product-link">
+            <div class="product-card">
+                <img src="images/basin-sink-organizer.png">
+                <h3>Basin Sink Organizer</h3>
+                <div class="rating">★★★★☆</div>
+                <p class="price">₹450</p>
+                <button class="buy-btn">Add to Cart</button>
+            </div>
+        </a>
+
+        <a href="products/Sink-Faucet.html" class="product-link">
+            <div class="product-card">
+                <img src="images/sink-faucet.png">
+                <h3>Sink Faucet</h3>
+                <div class="rating">★★★★☆</div>
+                <p class="price">₹210</p>
+                <button class="buy-btn">Add to Cart</button>
+            </div>
+        </a>
+
+        <a href="products/trolley.html" class="product-link">
+            <div class="product-card">
+                <img src="images/trolley.png">
+                <h3>Trolley Storage</h3>
+                <div class="rating">★★★★☆</div>
+                <p class="price">₹2100</p>
+                <button class="buy-btn">Add to Cart</button>
+            </div>
+        </a>
+
+        <a href="products/cutting-board.html" class="product-link">
+            <div class="product-card">
+                <img src="images/cutting-board.png">
+                <h3>Cutting Board</h3>
+                <div class="rating">★★★★☆</div>
+                <p class="price">₹385</p>
+                <button class="buy-btn">Add to Cart</button>
+            </div>
+        </a>
+
+        <a href="products/trolley-3.html" class="product-link">
+            <div class="product-card">
+                <img src="images/trolley-3.png">
+                <h3>Three Tier Trolley</h3>
+                <div class="rating">★★★★★</div>
+                <p class="price">₹1600</p>
+                <button class="buy-btn">Add to Cart</button>
+            </div>
+        </a>
+
+        <a href="products/wall-mount.html" class="product-link">
+            <div class="product-card">
+                <img src="images/wall-mount.png">
+                <h3>Kitchen Wall Mount</h3>
+                <div class="rating">★★★★☆</div>
+                <p class="price">₹430</p>
+                <button class="buy-btn">Add to Cart</button>
+            </div>
+        </a>
+
+        <a href="products/bathroom-sink-organizer.html" class="product-link">
+            <div class="product-card">
+                <img src="images/bathroom-sink-organizer.png">
+                <h3>Sink Organizer</h3>
+                <div class="rating">★★★★☆</div>
+                <p class="price">₹531</p>
+                <button class="buy-btn">Add to Cart</button>
+            </div>
+        </a>
+
+        <a href="products/bathroom-corner-shelf.html" class="product-link">
+            <div class="product-card">
+                <img src="images/bathroom-corner-shelf.png">
+                <h3>Bathroom Shelf</h3>
+                <div class="rating">★★★★☆</div>
+                <p class="price">₹454</p>
+                <button class="buy-btn">Add to Cart</button>
+            </div>
+        </a>
+
+        <a href="products/chopper.html" class="product-link">
+            <div class="product-card">
+                <img src="images/chopper.png">
+                <h3>Hand Chopper</h3>
+                <div class="rating">★★★★★</div>
+                <p class="price">₹130</p>
+                <button class="buy-btn">Add to Cart</button>
+            </div>
+        </a>
+
+        <a href="products/steel-board.html" class="product-link">
+            <div class="product-card">
+                <img src="images/steel-board.png">
+                <h3>Steel Cutting Board</h3>
+                <div class="rating">★★★★★</div>
+                <p class="price">₹637</p>
+                <button class="buy-btn">Add to Cart</button>
+            </div>
+        </a>
+
+        <a href="products/peeler.html" class="product-link">
+            <div class="product-card">
+                <img src="images/peeler.png">
+                <h3>Steel Peeler Set</h3>
+                <div class="rating">★★★★☆</div>
+                <p class="price">₹149</p>
+                <button class="buy-btn">Add to Cart</button>
+            </div>
+        </a>
+
+        <a href="products/knife-holder.html" class="product-link">
+            <div class="product-card">
+                <img src="images/knife-holder.png">
+                <h3>Kitchen Knife Holder</h3>
+                <div class="rating">★★★★☆</div>
+                <p class="price">₹644</p>
+                <button class="buy-btn">Add to Cart</button>
+            </div>
+        </a>
+
+        <a href="products/storage-container.html" class="product-link">
+            <div class="product-card">
+                <img src="images/storage-container.png">
+                <h3>Storage Container</h3>
+                <div class="rating">★★★★☆</div>
+                <p class="price">₹499</p>
+                <button class="buy-btn">Add to Cart</button>
+            </div>
+        </a>
+
+        <a href="products/pot-lid-holder.html" class="product-link">
+            <div class="product-card">
+                <img src="images/pot-lid-holder.png">
+                <h3>Pot Lid Holder</h3>
+                <div class="rating">★★★★☆</div>
+                <p class="price">₹299</p>
+                <button class="buy-btn">Add to Cart</button>
+            </div>
+        </a>
+
+        <a href="products/wall-hanger.html" class="product-link">
+            <div class="product-card">
+                <img src="images/wall-hanger.png">
+                <h3>Wall Mounted Hanger</h3>
+                <div class="rating">★★★★☆</div>
+                <p class="price">₹455</p>
+                <button class="buy-btn">Add to Cart</button>
+            </div>
+        </a>
+
+        <a href="products/kitchen-utensil-set.html" class="product-link">
+            <div class="product-card">
+                <img src="images/kitchen-utensil-set.png">
+                <h3>Kitchen Utensil Set</h3>
+                <div class="rating">★★★★★</div>
+                <p class="price">₹799</p>
+                <button class="buy-btn">Add to Cart</button>
+            </div>
+        </a>
+
+    </div>
+
+
+    <!-- CATEGORY POPUP -->
+    <div id="categories-popup" class="popup">
+        <h3>Categories</h3>
+        <div class="categories-grid">
+            <a href="Category.html?name=Kitchen" class="category-card">🍳 Kitchen</a>
+            <a href="Category.html?name=Bathroom" class="category-card">🚿 Bathroom</a>
+            <a href="Category.html?name=Cleaning" class="category-card">🧼 Cleaning</a>
+            <a href="Category.html?name=Storage" class="category-card">📦 Storage</a>
+        </div>
+        <button class="close-btn" onclick="toggleCategories()">Close</button>
     </div>
 
     <!-- CART POPUP -->
     <div id="cart-popup" class="popup">
-        <h3>Your Cart</h3>
+        <h3>Cart</h3>
         <ul id="cart-items"></ul>
-        <p id="total-price">Total: ₹0</p>
+        <div id="total-price">Total: ₹0</div>
+        <button class="pay-btn" onclick="payWithRazorpay()">Pay with Razorpay</button>
+        <button class="gpay-btn" onclick="payWithGPay()">Pay with GPay</button>
         <button class="close-btn" onclick="toggleCart()">Close</button>
     </div>
 
-    <!-- 🔥 IMPROVED CATEGORY POPUP -->
-    <div id="categories-popup" class="popup">
-        <h3>Categories</h3>
+    <!-- TOAST -->
+    <div id="toast"></div>
 
-        <div class="categories-grid">
-            <a href="category.html?name=Kitchen" class="category-card">🍳 Kitchen</a>
-            <a href="category.html?name=Bathroom" class="category-card">🚿 Bathroom</a>
-            <a href="category.html?name=Cleaning" class="category-card">🧼 Cleaning</a>
-            <a href="category.html?name=Storage" class="category-card">📦 Storage</a>
-        </div>
-
-        <button class="close-btn" onclick="toggleCategories()">Close</button>
-    </div>
-
-    <!-- JAVASCRIPT -->
+    <!-- SCRIPT -->
     <script>
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        document.addEventListener("DOMContentLoaded", function () {
+            document.body.classList.add("fade-in");
+            let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
 
-        function saveCart() {
-            localStorage.setItem("cart", JSON.stringify(cart));
-        }
+            // Load navbar and attach listeners after it's loaded
+            fetch("navbar.html")
+                .then(res => res.text())
+                .then(data => {
+                    document.getElementById("navbar").innerHTML = data;
 
-        function addToCart(name, price) {
-            let item = cart.find(i => i.name === name);
+                    // Categories button
+                    let catBtn = document.getElementById("categories-btn");
+                    if (catBtn) {
+                        catBtn.addEventListener("click", () => {
+                            let catPopup = document.getElementById("categories-popup");
+                            let cartPopup = document.getElementById("cart-popup");
+                            if (cartPopup) cartPopup.style.display = "none";
+                            if (catPopup)
+                                catPopup.style.display =
+                                    catPopup.style.display === "block" ? "none" : "block";
+                        });
+                    }
 
-            if (item) {
-                item.quantity++;
-            } else {
-                cart.push({ name, price, quantity: 1 });
+                    // Search functionality
+                    let searchInput = document.getElementById("search-input");
+                    if (searchInput) {
+                        searchInput.addEventListener("keyup", function () {
+                            let value = this.value.toLowerCase();
+                            // Support both old (.card .product-name) and new (.product-card h3)
+                            document.querySelectorAll(".card, .product-card").forEach(card => {
+                                let nameElem = card.querySelector(".product-name") || card.querySelector("h3");
+                                if (!nameElem) return;
+                                let name = nameElem.innerText.toLowerCase();
+                                card.style.display = name.includes(value) ? "block" : "none";
+                            });
+                        });
+                    }
+
+                    updateCart();
+                });
+
+            window.addEventListener("scroll", () => {
+                document.querySelectorAll(".reveal").forEach(el => {
+                    let top = el.getBoundingClientRect().top;
+                    if (top < window.innerHeight - 100) {
+                        el.classList.add("active");
+                    }
+                });
+            });
+
+            // ---------------- FUNCTIONS ----------------
+            function toggleCategories() {
+                let cartPopup = document.getElementById("cart-popup");
+                let catPopup = document.getElementById("categories-popup");
+                if (cartPopup) cartPopup.style.display = "none";
+                if (catPopup) catPopup.style.display = catPopup.style.display === "block" ? "none" : "block";
             }
 
-            saveCart();
+            function toggleCart() {
+                let cartPopup = document.getElementById("cart-popup");
+                let catPopup = document.getElementById("categories-popup");
+                if (catPopup) catPopup.style.display = "none";
+                if (cartPopup) cartPopup.style.display = cartPopup.style.display === "block" ? "none" : "block";
+            }
+
+            function showToast(message = "Added to cart!") {
+                let toast = document.getElementById("toast");
+                toast.innerText = message;
+                toast.style.display = "block";
+                setTimeout(() => toast.style.display = "none", 2000);
+            }
+
+            function addToCart(name, price) {
+                let item = cart.find(i => i.name === name);
+                if (item) item.quantity++;
+                else cart.push({ name, price, quantity: 1 });
+                sessionStorage.setItem("cart", JSON.stringify(cart));
+                updateCart();
+                showToast();
+            }
+
+            function updateCart() {
+                let countElem = document.getElementById("cart-count");
+                if (countElem) countElem.innerText = cart.reduce((a, b) => a + b.quantity, 0);
+
+                let list = document.getElementById("cart-items");
+                if (list) {
+                    list.innerHTML = "";
+                    let total = 0;
+                    cart.forEach(item => {
+                        let li = document.createElement("li");
+                        li.innerText = `${item.name} x${item.quantity}`;
+                        list.appendChild(li);
+                        total += item.price * item.quantity;
+                    });
+
+                    let totalElem = document.getElementById("total-price");
+                    if (totalElem) totalElem.innerText = "Total: ₹" + total;
+                }
+            }
+
+            function getTotal() {
+                return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+            }
+
+            function payWithRazorpay() {
+                let total = getTotal();
+                if (total === 0) { alert("Cart is empty!"); return; }
+                var options = {
+                    "key": "YOUR_KEY_ID",
+                    "amount": total * 100,
+                    "currency": "INR",
+                    "name": "Hometa",
+                    "method": { "upi": true },
+                    "handler": function () { alert("Payment Successful!"); }
+                };
+                var rzp1 = new Razorpay(options);
+                rzp1.open();
+            }
+
+            function payWithGPay() {
+                let total = getTotal();
+                if (total === 0) { alert("Cart is empty!"); return; }
+                window.location.href = `upi://pay?pa=yourupiid@okaxis&pn=Hometa&am=${total}&cu=INR`;
+            }
+
+            // Add to cart buttons
+            document.querySelectorAll(".card button, .product-card .buy-btn").forEach(btn => {
+                btn.addEventListener("click", function () {
+                    let card = btn.closest(".card, .product-card");
+                    let nameElem = card.querySelector(".product-name") || card.querySelector("h3");
+                    let name = nameElem.innerText;
+                    let priceText = card.querySelector("p").innerText.replace(/[^\d]/g, '');
+                    let price = parseFloat(priceText);
+                    addToCart(name, price);
+                });
+            });
+
+            // Fade-out navigation for all links
+            document.querySelectorAll("a").forEach(link => {
+                link.addEventListener("click", function (e) {
+                    let href = this.getAttribute("href");
+                    if (!href || href === "#" || href.startsWith("javascript")) return;
+                    e.preventDefault();
+                    document.body.classList.remove("fade-in");
+                    document.body.classList.add("fade-out");
+                    setTimeout(() => { window.location.href = href; }, 300);
+                });
+            });
+
+            // Make functions global
+            window.toggleCategories = toggleCategories;
+            window.toggleCart = toggleCart;
+            window.addToCart = addToCart;
+            window.payWithRazorpay = payWithRazorpay;
+            window.payWithGPay = payWithGPay;
+
             updateCart();
-        }
-
-        function updateCart() {
-            let list = document.getElementById("cart-items");
-            list.innerHTML = "";
-
-            let total = 0;
-
-            cart.forEach(item => {
-                let li = document.createElement("li");
-                li.innerText = `${item.name} x${item.quantity}`;
-                list.appendChild(li);
-                total += item.price * item.quantity;
-            });
-
-            document.getElementById("cart-count").innerText = cart.length;
-            document.getElementById("total-price").innerText = "Total: ₹" + total;
-        }
-
-        function toggleCart() {
-            let cartPopup = document.getElementById("cart-popup");
-            let catPopup = document.getElementById("categories-popup");
-
-            catPopup.style.display = "none";
-            cartPopup.style.display = cartPopup.style.display === "block" ? "none" : "block";
-        }
-
-        function toggleCategories() {
-            let cartPopup = document.getElementById("cart-popup");
-            let catPopup = document.getElementById("categories-popup");
-
-            cartPopup.style.display = "none";
-            catPopup.style.display = catPopup.style.display === "block" ? "none" : "block";
-        }
-
-        document.getElementById("search-input").addEventListener("keyup", function () {
-            let searchValue = this.value.toLowerCase();
-            let cards = document.querySelectorAll(".card");
-
-            cards.forEach(function (card) {
-                let productName = card.querySelector(".product-name").innerText.toLowerCase();
-                card.style.display = productName.includes(searchValue) ? "block" : "none";
-            });
         });
-
-        updateCart();
     </script>
-
 </body>
 
 </html>

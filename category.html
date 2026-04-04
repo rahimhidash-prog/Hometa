@@ -2,71 +2,223 @@
 <html>
 
 <head>
-  <title>Category</title>
+    <title>Category - Hometa</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <!-- FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      padding: 20px;
-    }
-
-    h1 {
-      text-align: center;
-    }
-
-    .products {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      margin-top: 20px;
-    }
-
-    .card {
-      border: 1px solid #ccc;
-      padding: 15px;
-      width: 150px;
-      text-align: center;
-      border-radius: 10px;
-    }
-  </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+    <!-- NAVBAR -->
+    <div id="navbar"></div>
 
-  <h1 id="category-title"></h1>
+    <!-- CATEGORY TITLE -->
+    <h1 id="category-title"></h1>
+    <p class="subtitle">Explore the best products</p>
 
-  <div id="product-list" class="products"></div>
+    <!-- PRODUCTS -->
+    <div class="products" id="product-list"></div>
 
-  <script>
-    // get category from URL
-    const params = new URLSearchParams(window.location.search);
-    const category = params.get("name");
+    <!-- CART POPUP -->
+    <div id="cart-popup" class="popup">
+        <h3>Your Cart</h3>
+        <ul id="cart-items"></ul>
+        <p id="total-price">Total: ₹0</p>
+        <button class="close-btn" onclick="toggleCart()">Close</button>
+        <button class="pay-btn" onclick="payWithRazorpay()">Pay with Razorpay</button>
+        <button class="gpay-btn" onclick="payWithGPay()">Pay with GPay</button>
+    </div>
 
-    // set heading
-    document.getElementById("category-title").innerText = category;
+    <!-- CATEGORIES POPUP -->
+    <div id="categories-popup" class="popup">
+        <h3>Shop Categories</h3>
+        <div class="categories-grid">
+            <a href="category.html?name=Kitchen" class="category-card">🍳 Kitchen</a>
+            <a href="category.html?name=Bathroom" class="category-card">🚿 Bathroom</a>
+            <a href="category.html?name=Cleaning" class="category-card">🧼 Cleaning</a>
+            <a href="category.html?name=Storage" class="category-card">📦 Storage</a>
+        </div>
+        <button class="close-btn" onclick="toggleCategories()">Close</button>
+    </div>
 
-    // products for each category
-    const data = {
-      Snacks: ["Chips", "Biscuits"],
-      Drinks: ["Coke", "Juice"],
-      Chocolates: ["Dairy Milk", "KitKat"]
-    };
+    <!-- TOAST -->
+    <div id="toast"
+        style="position: fixed; bottom: 20px; right: 20px; background: rgba(0, 255, 34, 0.856); color: white; padding: 10px 20px; border-radius: 5px; display: none;">
+        Added to cart!
+    </div>
 
-    let list = document.getElementById("product-list");
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.body.classList.add("fade-in");
+        });
+        document.body.classList.add("fade-in");
+        // ------------------- NAVBAR LOAD -------------------
+        fetch("navbar.html")
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById("navbar").innerHTML = data;
 
-    if (data[category]) {
-      data[category].forEach(item => {
-        let div = document.createElement("div");
-        div.className = "card";
-        div.innerText = item;
-        list.appendChild(div);
-      });
-    }
-  </script>
+                // Attach categories button
+                const catBtn = document.getElementById("categories-btn");
+                if (catBtn) catBtn.addEventListener("click", toggleCategories);
 
+                // Attach search input
+                const searchInput = document.getElementById("search-input");
+                if (searchInput) {
+                    searchInput.addEventListener("keyup", function () {
+                        let value = this.value.toLowerCase();
+                        document.querySelectorAll(".card").forEach(card => {
+                            let name = card.querySelector("h3").innerText.toLowerCase();
+                            card.style.display = name.includes(value) ? "block" : "none";
+                        });
+                    });
+                }
+            });
+
+        // ------------------- CART LOGIC -------------------
+        let cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+
+        function saveCart() {
+            sessionStorage.setItem("cart", JSON.stringify(cart));
+        }
+
+        function addToCart(name, price) {
+            let item = cart.find(i => i.name === name);
+            if (item) item.quantity++;
+            else cart.push({ name, price, quantity: 1 });
+            saveCart();
+            updateCart();
+            showToast();
+        }
+
+        function updateCart() {
+            let list = document.getElementById("cart-items");
+            if (list) {
+                list.innerHTML = "";
+                let total = 0;
+                cart.forEach(item => {
+                    let li = document.createElement("li");
+                    li.innerText = `${item.name} x${item.quantity}`;
+                    list.appendChild(li);
+                    total += item.price * item.quantity;
+                });
+                const countElem = document.getElementById("cart-count");
+                if (countElem) countElem.innerText = cart.reduce((a, b) => a + b.quantity, 0);
+                document.getElementById("total-price").innerText = "Total: ₹" + total;
+            }
+        }
+
+        function showToast() {
+            const toast = document.getElementById("toast");
+            toast.style.display = "block";
+            setTimeout(() => toast.style.display = "none", 2000);
+        }
+
+        function getTotal() {
+            return cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
+        }
+
+        function payWithRazorpay() {
+            let total = getTotal();
+            if (total === 0) return alert("Cart is empty!");
+            const options = {
+                key: "YOUR_KEY_ID",
+                amount: total * 100,
+                currency: "INR",
+                name: "Hometa",
+                method: { upi: true },
+                handler: function () {
+                    alert("Payment Successful!");
+                }
+            };
+            const rzp = new Razorpay(options);
+            rzp.open();
+        }
+
+        function payWithGPay() {
+            let total = getTotal();
+            if (total === 0) return alert("Cart is empty!");
+            window.location.href = `upi://pay?pa=yourupiid@okaxis&pn=Hometa&am=${total}&cu=INR`;
+        }
+
+        function toggleCart() {
+            const cartPopup = document.getElementById("cart-popup");
+            const catPopup = document.getElementById("categories-popup");
+            if (catPopup) catPopup.style.display = "none";
+            if (cartPopup) cartPopup.style.display = cartPopup.style.display === "block" ? "none" : "block";
+        }
+
+        function toggleCategories() {
+            const cartPopup = document.getElementById("cart-popup");
+            const catPopup = document.getElementById("categories-popup");
+            if (cartPopup) cartPopup.style.display = "none";
+            if (catPopup) catPopup.style.display = catPopup.style.display === "block" ? "none" : "block";
+        }
+
+        // ------------------- CATEGORY LOGIC -------------------
+        const params = new URLSearchParams(window.location.search);
+        const category = params.get("name") || "Kitchen"; // default
+        document.getElementById("category-title").innerText = category;
+
+        const allProducts = [
+
+            // 🍳 KITCHEN
+            { name: "Chopper", price: 199, category: "Kitchen", img: "images/chopper.png", link: "products/chopper.html" },
+            { name: "Cutting Board", price: 149, category: "Kitchen", img: "images/cutting-board.png", link: "products/cutting-board.html" },
+            { name: "Knife Holder", price: 199, category: "Kitchen", img: "images/knife-holder.png", link: "products/knife-holder.html" },
+            { name: "Peeler", price: 99, category: "Kitchen", img: "images/peeler.png", link: "products/peeler.html" },
+            { name: "Spice Rack", price: 299, category: "Kitchen", img: "images/Rotating-spice-rack.png", link: "products/rotating-spice-rack.html" },
+            { name: "Utensil Set", price: 399, category: "Kitchen", img: "images/kitchen-utensil-set.png", link: "products/kitchen-utensil-set.html" },
+            { name: "Steel Board", price: 249, category: "Kitchen", img: "images/steel-board.png", link: "products/steel-board.html" },
+
+            // 📦 STORAGE
+            { name: "Storage Container", price: 199, category: "Storage", img: "images/storage-container.png", link: "products/storage-container.html" },
+            { name: "Trolley", price: 499, category: "Storage", img: "images/trolley.png", link: "products/trolley.html" },
+            { name: "Trolley 3 Layer", price: 699, category: "Storage", img: "images/trolley-3.png", link: "products/trolley-3.html" },
+            { name: "Wall Hanger", price: 149, category: "Storage", img: "images/wall-hanger.png", link: "products/wall-hanger.html" },
+            { name: "Wall Mount", price: 199, category: "Storage", img: "images/wall-mount.png", link: "products/wall-mount.html" },
+            { name: "Pot Lid Holder", price: 199, category: "Storage", img: "images/pot-lid-holder.png", link: "products/pot-lid-holder.html" },
+
+            // 🚿 BATHROOM
+            { name: "Basin Organizer", price: 199, category: "Bathroom", img: "images/basin-sink-organizer.png", link: "products/basin-sink-organizer.html" },
+            { name: "Sink Organizer", price: 199, category: "Bathroom", img: "images/bathroom-sink-organizer.png", link: "products/bathroom-sink-organizer.html" },
+            { name: "Corner Shelf", price: 299, category: "Bathroom", img: "images/bathroom-corner-shelf.png", link: "products/bathroom-corner-shelf.html" },
+            { name: "Soap Holder", price: 99, category: "Bathroom", img: "images/soap-holder.png", link: "products/soap-holder.html" },
+
+            // 🧼 CLEANING
+            { name: "Sink Faucet", price: 149, category: "Cleaning", img: "images/sink-faucet.png", link: "products/sink-faucet.html" }
+
+        ];
+
+        const filtered = allProducts.filter(p => p.category === category);
+        const container = document.getElementById("product-list");
+
+        filtered.forEach(p => {
+            container.innerHTML += `
+    <div class="card" onclick="window.location.href='${p.link}'">
+        <img src="${p.img}">
+        <h3>${p.name}</h3>
+        <p>₹${p.price}</p>
+        <button onclick="event.stopPropagation(); addToCart('${p.name}', ${p.price})">Add to Cart</button>
+    </div>
+`;
+        });
+
+        // ------------------- SEARCH -------------------
+        document.addEventListener("input", function (e) {
+            if (e.target && e.target.id === "search-input") {
+                const value = e.target.value.toLowerCase();
+                document.querySelectorAll(".card").forEach(card => {
+                    let name = card.querySelector("h3").innerText.toLowerCase();
+                    card.style.display = name.includes(value) ? "block" : "none";
+                });
+            }
+        });
+
+        updateCart();
+    </script>
 </body>
 
 </html>
